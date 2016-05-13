@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context="me.mustakimov.scetovod.MainScreen.PurchasesFragment"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="140dp"
+        android:orientation="vertical"
+        android:background="#607D8B">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Потрачено за сегодня"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textSize="21dp"
+            android:textIsSelectable="true"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="500 Р"
+            android:id="@+id/textView"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textSize="55dp"
+            android:layout_marginBottom="10dp" />
+
+    </LinearLayout>
+
+    <ExpandableListView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/expandableListView" />
+</LinearLayout>

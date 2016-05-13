@@ -1,4 +1,22 @@
 <resources>
-    <string name="app_name">Scetovod</string>
+    <string name="app_name">Schetovod</string>
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="categories">
+        <item>Еда</item>
+        <item>Транспорт</item>
+        <item>Гигиена</item>
+        <item>Жилье</item>
+        <item>Здоровье</item>
+        <item>Машина</item>
+        <item>Одежда</item>
+        <item>Питомцы</item>
+        <item>Подарки</item>
+        <item>Развлечения</item>
+        <item>Связь</item>
+        <item>Спорт</item>
+    </string-array>
 </resources>

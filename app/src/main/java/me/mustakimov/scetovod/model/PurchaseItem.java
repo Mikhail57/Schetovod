@@ -6,8 +6,6 @@ package me.mustakimov.scetovod.model;
 
 import android.support.annotation.NonNull;
 
-import me.mustakimov.scetovod.provider.SchetovodContract;
-
 public class PurchaseItem implements Comparable<PurchaseItem> {
 
     // Has been deleted this item?
@@ -22,7 +20,7 @@ public class PurchaseItem implements Comparable<PurchaseItem> {
     public double price = 0;
 
     // Date
-    public int date = 0;
+    public long date = 0;
 
     @Override
     public int compareTo(@NonNull PurchaseItem another) {
