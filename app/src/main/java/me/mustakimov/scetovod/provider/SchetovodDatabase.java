@@ -5,8 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-import me.mustakimov.scetovod.provider.SchetovodContract.*;
-import static me.mustakimov.scetovod.util.LogUtils.*;
+import me.mustakimov.scetovod.provider.SchetovodContract.CategoriesColumns;
+import me.mustakimov.scetovod.provider.SchetovodContract.PurchasesColumns;
+
+import static me.mustakimov.scetovod.util.LogUtils.makeLogTag;
 
 /**
  * Created by mikhail on 29/02/16.
@@ -19,7 +21,14 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
     private static final int VER_2016_ALPHA_A = 1; //alpha app version 0.0.1
     private static final int CUR_DATABASE_VERSION = VER_2016_ALPHA_A;
 
-    private final Context mContext;
+    private static Context mContext;
+    private static SchetovodDatabase mInstance;
+
+    public static SchetovodDatabase getInstance(Context context) {
+        if (mInstance == null)
+            mInstance = new SchetovodDatabase(context);
+        return mInstance;
+    }
 
     interface Tables {
         String CATEGORIES = "categories";
@@ -53,4 +62,6 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+//    public static void
 }
