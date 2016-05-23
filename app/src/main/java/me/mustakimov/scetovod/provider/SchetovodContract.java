@@ -5,29 +5,33 @@ package me.mustakimov.scetovod.provider;
  */
 public class SchetovodContract {
 
-    interface CategoriesColumns {
+    interface CategoryColumns {
 
         /** Unique string identifier of category */
-        String CATEGORY_ID = "category_title";
+        String ID = "id";
         /** Unique string title of category shown in UI */
-        String CATEGORY_TITLE = "category_title";
+        String TITLE = "title";
         /** String description of category */
-        String CATEGORY_DESCRIPTION = "category_description";
+        String DESCRIPTION = "description";
         /** Extra field (will be used in future updates) */
-        String CATEGORY_DELETED = "category_deleted";
+        String DELETED = "deleted";
     }
 
     interface PurchasesColumns {
 
         /** Category of purchase */
-        String PURCHASE_CATEGORY = "purchase_category";
+        String CATEGORY = "category";
         /** Title of current purchase. For example, "Bread". */
-        String PURCHASE_TITLE = "purchase_title";
+        String TITLE = "title";
+        /** Some additional description of purchase */
+        String DESCRIPTION = "description";
         /** Count of items of current purchase */
-        String PURCHASE_COUNT = "purchase_count";
+        String COUNT = "count";
         /** Price of the purchase */
-        String PURCHASE_PRICE = "purchase_price";
+        String PRICE = "price";
         /** Day when user took purchase */
-        String PURCHASE_DATE = "purchase_date";
+        String DATE = "date";
+        /** Extra field (will be used in future updates) */
+        String DELETED = "deleted";
     }
 }
