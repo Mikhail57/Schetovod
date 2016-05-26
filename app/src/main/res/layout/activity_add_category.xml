@@ -17,7 +17,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:id="@+id/editText3"
+            android:id="@+id/categoryTitle"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -26,17 +26,17 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add"
+            android:text="@string/addButton"
             android:id="@+id/button2"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/editText3"
-            android:layout_toEndOf="@+id/editText3" />
+            android:layout_toRightOf="@+id/categoryTitle"
+            android:layout_toEndOf="@+id/categoryTitle" />
     </LinearLayout>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/categoryListView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

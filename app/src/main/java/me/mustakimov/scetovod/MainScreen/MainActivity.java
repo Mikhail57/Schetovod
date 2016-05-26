@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import me.mustakimov.scetovod.AddScreen.AddScreenActivity;
+import me.mustakimov.scetovod.CommonVariables;
 import me.mustakimov.scetovod.R;
 
 public class MainActivity extends FragmentActivity {
@@ -19,6 +20,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CommonVariables.initializeVariables(this);
 
         MainPageFragmentAdapter adapter = new MainPageFragmentAdapter(getSupportFragmentManager());
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);

@@ -65,7 +65,6 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
                 + PurchasesColumns.PRICE + " INTEGER NOT NULL,"
                 + PurchasesColumns.DELETED + " INTEGER NOT NULL,"
                 + PurchasesColumns.DATE + " INTEGER NOT NULL)");
-        db.close();
     }
 
     @Override
@@ -83,7 +82,6 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         values.put(CategoryColumns.DESCRIPTION, category.getDescription());
         long insertId = db.insert(Tables.CATEGORIES, null, values);
 
-        db.close();
         return insertId;
     }
 
@@ -112,7 +110,6 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         values.put(PurchasesColumns.TITLE, purchase.getTitle());
         long insertId = db.insert(Tables.PURCHASES, null, values);
 
-        db.close();
         return insertId;
     }
 
