@@ -14,10 +14,15 @@ import android.widget.TextView;
 import me.mustakimov.scetovod.CommonVariables;
 import me.mustakimov.scetovod.R;
 import me.mustakimov.scetovod.model.PurchaseItem;
+import me.mustakimov.scetovod.util.ParseSpeechUtils;
+import ru.yandex.speechkit.Recognizer;
+import ru.yandex.speechkit.SpeechKit;
+import ru.yandex.speechkit.gui.RecognizerActivity;
 
 public class AddScreenActivity extends AppCompatActivity {
 
     static final int PICK_CATEGORY_REQUEST = 1;
+    static final int YANDEX_SPEECHKIT_REQUEST = 31;
 
     LinearLayout selectCategoryLayout;
     TextView categoryTextView;
@@ -44,30 +49,45 @@ public class AddScreenActivity extends AppCompatActivity {
         categoryTextView.setText(CommonVariables.getCategories().get(category).getTitle());
         wiggle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.wiggle);
 
-        addPurchaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean filled = true;
-                if (pricePurchase.getText().length() == 0) {
-                    pricePurchase.startAnimation(wiggle);
-                    filled = false;
-                }
-                if (titlePurchase.getText().length() == 0) {
-                    titlePurchase.startAnimation(wiggle);
-                    filled = false;
-                }
-                if (filled) {
-                    PurchaseItem purchase = new PurchaseItem();
-                    purchase.setPrice(Double.parseDouble(pricePurchase.getText().toString()));
-                    purchase.setTitle(titlePurchase.getText().toString());
-                    purchase.setCategoryId(category);
-                    CommonVariables.addPurchase(AddScreenActivity.this, purchase);
+        addPurchaseButton.setOnClickListener(onClickAddButton);
 
-                    finish();
-                }
-            }
-        });
+        /**
+         * Yandex.Speechkit initialization
+         */
+        SpeechKit.getInstance().configure(getApplicationContext(), "e9122350-9172-4912-83ef-03132177fcd7");
+
+        // To start recognition create an Intent with required extras.
+        Intent intent = new Intent(this, RecognizerActivity.class);
+        // Specify the model for better results.
+        intent.putExtra(RecognizerActivity.EXTRA_MODEL, Recognizer.Model.NOTES);
+        // Specify the language.
+        intent.putExtra(RecognizerActivity.EXTRA_LANGUAGE, Recognizer.Language.RUSSIAN);
+        startActivityForResult(intent, YANDEX_SPEECHKIT_REQUEST);
     }
+
+    View.OnClickListener onClickAddButton = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            boolean filled = true;
+            if (pricePurchase.getText().length() == 0) {
+                pricePurchase.startAnimation(wiggle);
+                filled = false;
+            }
+            if (titlePurchase.getText().length() == 0) {
+                titlePurchase.startAnimation(wiggle);
+                filled = false;
+            }
+            if (filled) {
+                PurchaseItem purchase = new PurchaseItem();
+                purchase.setPrice(Double.parseDouble(pricePurchase.getText().toString()));
+                purchase.setTitle(titlePurchase.getText().toString());
+                purchase.setCategoryId(category);
+                CommonVariables.addPurchase(AddScreenActivity.this, purchase);
+
+                finish();
+            }
+        }
+    };
 
     View.OnClickListener onClickChooseCategory = new View.OnClickListener() {
         @Override
@@ -83,6 +103,14 @@ public class AddScreenActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 category = data.getIntExtra("categoryPosition", category);
                 categoryTextView.setText(CommonVariables.getCategories().get(category).getTitle());
+            }
+        }
+        if (requestCode == YANDEX_SPEECHKIT_REQUEST) {
+            if (resultCode == RecognizerActivity.RESULT_OK && data != null) {
+                String result = data.getStringExtra(RecognizerActivity.EXTRA_RESULT);
+                PurchaseItem purchase = ParseSpeechUtils.parseStringToPurchase(result);
+                titlePurchase.setText(purchase.getTitle());
+                pricePurchase.setText(Double.toString(purchase.getPrice()));
             }
         }
     }

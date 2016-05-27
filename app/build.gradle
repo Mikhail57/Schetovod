@@ -20,10 +20,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('libs/morph-1.1.jar')
+    compile files('libs/russian-1.1.jar')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.yandex.android:speechkit:2.5.0'
     compile 'com.android.support:support-v4:23.3.0'
+    /*compile 'org.apache.lucene:lucene-core:4.6.1'
+    compile 'org.apache.lucene:lucene-analyzers:3.6.2'*/
+
 }

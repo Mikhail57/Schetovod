@@ -6,14 +6,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import me.mustakimov.scetovod.CommonVariables;
 import me.mustakimov.scetovod.R;
+import me.mustakimov.scetovod.model.CategoryItem;
 
 public class AddCategoryActivity extends AppCompatActivity {
 
     ListView categoriesLV;
+    EditText categoryTitleET;
+    Button addCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,21 @@ public class AddCategoryActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        categoryTitleET = (EditText) findViewById(R.id.categoryTitleEditText);
+        addCategory = (Button) findViewById(R.id.addCategoryButton);
+        addCategory.setOnClickListener(onAddCategoryListener);
     }
 
+    View.OnClickListener onAddCategoryListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String title = categoryTitleET.getText().toString();
+            CategoryItem category = new CategoryItem();
+            category.setTitle(title);
+
+            CommonVariables.addCategory(AddCategoryActivity.this, category);
+        }
+    };
 
 }
