@@ -33,11 +33,10 @@ public class ParseSpeechUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //List<String> wordsBaseForm = luceneMorphology.getNormalForms(encoded);
         List<String> wordsBaseForm = new ArrayList<>();
         String[] words = getWordsFromSentences(encoded);
         for (String word : words) {
-            if (luceneMorphology != null && !hasDigit(word)) {
+            if (luceneMorphology != null && isRussianSmall(word)) {
                 String wordForm = luceneMorphology.getNormalForms(word).get(0);
                 wordsBaseForm.add(wordForm);
                 LOGE(LOG_TAG, "Word: " + wordForm);
@@ -117,6 +116,12 @@ public class ParseSpeechUtils {
 
     private static boolean hasDigit(String string) {
         Pattern pattern = Pattern.compile("[0-9]");
+        Matcher matcher = pattern.matcher(string);
+        return matcher.find();
+    }
+
+    private static boolean isRussianSmall(String string) {
+        Pattern pattern = Pattern.compile("[а-я]");
         Matcher matcher = pattern.matcher(string);
         return matcher.find();
     }

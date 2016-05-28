@@ -41,8 +41,8 @@ public class CategoryItem {
         this.deleted = (deleted != 0);
     }
 
-    private String title;
-    private String description;
+    private String title="";
+    private String description="";
     private int id;
     private boolean deleted;
 }

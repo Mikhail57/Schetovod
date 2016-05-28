@@ -55,6 +55,10 @@ public class CommonVariables {
 
             categories.add(categoryItem);
         }
+
+        for (CategoryItem category : categories) {
+            SchetovodDatabase.createCategory(category, context);
+        }
     }
 
     public static boolean addCategory(Context context, CategoryItem category) {

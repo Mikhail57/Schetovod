@@ -51,11 +51,11 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Tables.CATEGORIES + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + CategoryColumns.ID + " LONG NOT NULL,"
+                //+ CategoryColumns.ID + " LONG AUTOINCREMENT,"
                 + CategoryColumns.TITLE + " TEXT NOT NULL,"
                 + CategoryColumns.DESCRIPTION + " TEXT NOT NULL,"
-                + CategoryColumns.DELETED + " INTEGER NOT NULL,"
-                + "UNIQUE (" + CategoryColumns.ID + ") ON CONFLICT REPLACE)");
+                + CategoryColumns.DELETED + " INTEGER NOT NULL)");
+                //+ "UNIQUE (" + CategoryColumns.ID + ") ON CONFLICT REPLACE)");
         db.execSQL("CREATE TABLE " + Tables.PURCHASES + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + PurchasesColumns.TITLE + " TEXT NOT NULL,"
@@ -121,7 +121,7 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         SchetovodDatabase database = SchetovodDatabase.getInstance(context);
         SQLiteDatabase db = database.getReadableDatabase();
         Cursor cursor = db.query(Tables.CATEGORIES, new String[]{
-                        CategoryColumns.ID, CategoryColumns.TITLE, CategoryColumns.DELETED,
+                        BaseColumns._ID, CategoryColumns.TITLE, CategoryColumns.DELETED,
                         CategoryColumns.DESCRIPTION},
                 null, null, null, null, null);
 
@@ -129,6 +129,7 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 categories.add(cursorToCategory(cursor));
+                cursor.moveToNext();
             }
         }
 
@@ -143,11 +144,12 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
                         PurchasesColumns.TITLE, PurchasesColumns.CATEGORY, PurchasesColumns.COUNT,
                         PurchasesColumns.DATE, PurchasesColumns.PRICE, PurchasesColumns.DELETED,
                         PurchasesColumns.DESCRIPTION},
-                null, null, null, null, null);
+                PurchasesColumns.DELETED+"=0", null, null, null, null);
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 purchases.add(cursorToPurchase(cursor));
+                cursor.moveToNext();
             }
         }
 
@@ -157,10 +159,10 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
     private static CategoryItem cursorToCategory(Cursor cursor) {
         CategoryItem category = new CategoryItem();
 
-        int idColumn = cursor.getColumnIndex(CategoryColumns.ID);
-        int deletedColumn = cursor.getColumnIndex(CategoryColumns.DELETED);
-        int titleColumn = cursor.getColumnIndex(CategoryColumns.TITLE);
-        int descriptionColumn = cursor.getColumnIndex(CategoryColumns.DESCRIPTION);
+        final int idColumn = cursor.getColumnIndex(BaseColumns._ID);
+        final int deletedColumn = cursor.getColumnIndex(CategoryColumns.DELETED);
+        final int titleColumn = cursor.getColumnIndex(CategoryColumns.TITLE);
+        final int descriptionColumn = cursor.getColumnIndex(CategoryColumns.DESCRIPTION);
 
         category.setId(cursor.getInt(idColumn));
         category.setDeleted(cursor.getInt(deletedColumn));
@@ -173,13 +175,13 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
     private static PurchaseItem cursorToPurchase(Cursor cursor) {
         PurchaseItem purchase = new PurchaseItem();
 
-        int titleColumn = cursor.getColumnIndex(PurchasesColumns.TITLE);
-        int categoryColumn = cursor.getColumnIndex(PurchasesColumns.CATEGORY);
-        int countColumn = cursor.getColumnIndex(PurchasesColumns.COUNT);
-        int dateColumn = cursor.getColumnIndex(PurchasesColumns.DATE);
-        int priceColumn = cursor.getColumnIndex(PurchasesColumns.PRICE);
-        int deletedColumn = cursor.getColumnIndex(PurchasesColumns.DELETED);
-        int descriptionColumn = cursor.getColumnIndex(PurchasesColumns.DESCRIPTION);
+        final int titleColumn = cursor.getColumnIndex(PurchasesColumns.TITLE);
+        final int categoryColumn = cursor.getColumnIndex(PurchasesColumns.CATEGORY);
+        final int countColumn = cursor.getColumnIndex(PurchasesColumns.COUNT);
+        final int dateColumn = cursor.getColumnIndex(PurchasesColumns.DATE);
+        final int priceColumn = cursor.getColumnIndex(PurchasesColumns.PRICE);
+        final int deletedColumn = cursor.getColumnIndex(PurchasesColumns.DELETED);
+        final int descriptionColumn = cursor.getColumnIndex(PurchasesColumns.DESCRIPTION);
 
         purchase.setDeleted(cursor.getInt(deletedColumn));
         purchase.setDescription(cursor.getString(descriptionColumn));

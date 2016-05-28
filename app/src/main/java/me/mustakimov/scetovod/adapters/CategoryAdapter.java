@@ -1,4 +1,4 @@
-package me.mustakimov.scetovod.AddScreen;
+package me.mustakimov.scetovod.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

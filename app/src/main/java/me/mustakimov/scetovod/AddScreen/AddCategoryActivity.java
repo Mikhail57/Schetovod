@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import me.mustakimov.scetovod.CommonVariables;
 import me.mustakimov.scetovod.R;
+import me.mustakimov.scetovod.adapters.CategoryAdapter;
 import me.mustakimov.scetovod.model.CategoryItem;
 
 public class AddCategoryActivity extends AppCompatActivity {
@@ -20,13 +21,16 @@ public class AddCategoryActivity extends AppCompatActivity {
     EditText categoryTitleET;
     Button addCategory;
 
+    CategoryAdapter categoryAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
 
         categoriesLV = (ListView) findViewById(R.id.categoryListView);
-        categoriesLV.setAdapter(new CategoryAdapter(this, CommonVariables.getCategories()));
+        categoryAdapter = new CategoryAdapter(this, CommonVariables.getCategories());
+        categoriesLV.setAdapter(categoryAdapter);
 
         categoriesLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -51,6 +55,7 @@ public class AddCategoryActivity extends AppCompatActivity {
             category.setTitle(title);
 
             CommonVariables.addCategory(AddCategoryActivity.this, category);
+            categoryAdapter.notifyDataSetChanged();
         }
     };
 

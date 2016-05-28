@@ -1,6 +1,7 @@
 package me.mustakimov.scetovod.AddScreen;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 import me.mustakimov.scetovod.CommonVariables;
 import me.mustakimov.scetovod.R;
@@ -82,6 +85,8 @@ public class AddScreenActivity extends AppCompatActivity {
                 purchase.setPrice(Double.parseDouble(pricePurchase.getText().toString()));
                 purchase.setTitle(titlePurchase.getText().toString());
                 purchase.setCategoryId(category);
+                Calendar rightNow = Calendar.getInstance();
+                purchase.setDate(rightNow.getTimeInMillis());
                 CommonVariables.addPurchase(AddScreenActivity.this, purchase);
 
                 finish();
@@ -108,10 +113,35 @@ public class AddScreenActivity extends AppCompatActivity {
         if (requestCode == YANDEX_SPEECHKIT_REQUEST) {
             if (resultCode == RecognizerActivity.RESULT_OK && data != null) {
                 String result = data.getStringExtra(RecognizerActivity.EXTRA_RESULT);
-                PurchaseItem purchase = ParseSpeechUtils.parseStringToPurchase(result);
-                titlePurchase.setText(purchase.getTitle());
-                pricePurchase.setText(Double.toString(purchase.getPrice()));
+                new AsyncFillPurchase().execute(result);
             }
+        }
+    }
+
+    class AsyncFillPurchase extends AsyncTask<String, Void, Void> {
+
+        PurchaseItem purchase;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            if (params.length == 0)
+                return null;
+
+            purchase = ParseSpeechUtils.parseStringToPurchase(params[0]);
+            System.gc();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            titlePurchase.setText(purchase.getTitle());
+            pricePurchase.setText(Double.toString(purchase.getPrice()));
         }
     }
 }

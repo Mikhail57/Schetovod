@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:id="@+id/view"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:paddingLeft="10dp"
         android:layout_marginBottom="0dp">
 
@@ -21,14 +21,15 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Добавление расхода"
             android:id="@+id/textView5"
-            android:textColor="@color/background_material_light" />
+            android:textColor="@color/background_material_light"
+            android:textSize="21dp" />
 
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/view"
         android:layout_above="@+id/addPurchaseButton"
         android:padding="5dp"

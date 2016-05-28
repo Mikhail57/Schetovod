@@ -8,7 +8,7 @@ public class SchetovodContract {
     interface CategoryColumns {
 
         /** Unique string identifier of category */
-        String ID = "id";
+        //String ID = "id";
         /** Unique string title of category shown in UI */
         String TITLE = "title";
         /** String description of category */

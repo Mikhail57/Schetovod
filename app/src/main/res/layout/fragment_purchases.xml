@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context="me.mustakimov.scetovod.MainScreen.PurchasesFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <LinearLayout
@@ -13,7 +14,8 @@
         android:layout_height="wrap_content"
         android:minHeight="180dp"
         android:orientation="vertical"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:elevation="3dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,8 +31,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="500 Р"
-            android:id="@+id/textView"
+            android:text="---"
+            android:id="@+id/todaySum"
             android:layout_weight="2"
             android:gravity="center"
             android:textColor="#FFF"
@@ -39,8 +41,11 @@
 
     </LinearLayout>
 
-    <ExpandableListView
-        android:layout_width="fill_parent"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/expandableListView" />
+        android:id="@+id/purchasesListView"
+        android:divider="@color/colorDivider"
+        android:dividerHeight="0.1dp" />
+
 </LinearLayout>
