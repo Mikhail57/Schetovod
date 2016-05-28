@@ -40,5 +40,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/linearLayout" />
+        android:layout_above="@+id/linearLayout"
+        android:divider="@color/colorDivider"
+        android:dividerHeight="0.1dp" />
 </RelativeLayout>

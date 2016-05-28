@@ -31,7 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view"
-        android:layout_above="@+id/addPurchaseButton"
         android:padding="5dp"
         android:layout_marginTop="10dp">
 
