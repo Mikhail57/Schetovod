@@ -3,9 +3,13 @@ package me.mustakimov.scetovod.MainScreen;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import me.mustakimov.scetovod.CommonVariables;
@@ -38,6 +42,8 @@ public class PurchasesFragment extends Fragment {
 
         PurchasesUtils.calculateAndUpdateSumView(view);
 
+        registerForContextMenu(purchasesListView);
+
         return view;
     }
 
@@ -52,6 +58,35 @@ public class PurchasesFragment extends Fragment {
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.purchasesListView) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+            menu.setHeaderTitle(CommonVariables.getPurchases().get(info.position).getTitle());
+            String[] menuItems = getResources().getStringArray(R.array.menu);
+            for (int i = 0; i<menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+        //String[] menuItems = getResources().getStringArray(R.array.menu);
+
+        if (menuItemIndex==0) {
+            CommonVariables.getPurchases().get(info.position).setDeleted(true);
+            notifyDataChanged();
+        }
+
+        //TextView text = (TextView)findViewById(R.id.footer);
+        //text.setText(String.format("Selected %s for item %s", menuItemName, listItemName));
+        return true;
     }
 
 }

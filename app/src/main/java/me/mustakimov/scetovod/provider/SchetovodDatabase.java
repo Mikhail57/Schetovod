@@ -54,8 +54,8 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
                 //+ CategoryColumns.ID + " LONG AUTOINCREMENT,"
                 + CategoryColumns.TITLE + " TEXT NOT NULL,"
                 + CategoryColumns.DESCRIPTION + " TEXT NOT NULL,"
-                + CategoryColumns.DELETED + " INTEGER NOT NULL)");
-                //+ "UNIQUE (" + CategoryColumns.ID + ") ON CONFLICT REPLACE)");
+                + CategoryColumns.DELETED + " INTEGER NOT NULL,"
+                + "UNIQUE (" + CategoryColumns.TITLE + ") ON CONFLICT REPLACE)");
         db.execSQL("CREATE TABLE " + Tables.PURCHASES + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + PurchasesColumns.TITLE + " TEXT NOT NULL,"
@@ -109,6 +109,7 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         values.put(PurchasesColumns.PRICE, purchase.getPrice());
         values.put(PurchasesColumns.TITLE, purchase.getTitle());
         long insertId = db.insert(Tables.PURCHASES, null, values);
+        purchase.setId((int) insertId);
 
         return insertId;
     }
@@ -143,7 +144,7 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         Cursor cursor = db.query(Tables.PURCHASES, new String[]{
                         PurchasesColumns.TITLE, PurchasesColumns.CATEGORY, PurchasesColumns.COUNT,
                         PurchasesColumns.DATE, PurchasesColumns.PRICE, PurchasesColumns.DELETED,
-                        PurchasesColumns.DESCRIPTION},
+                        PurchasesColumns.DESCRIPTION, BaseColumns._ID},
                 PurchasesColumns.DELETED+"=0", null, null, null, null);
 
         if (cursor.moveToFirst()) {
@@ -154,6 +155,15 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         }
 
         return purchases;
+    }
+
+    public static void deletePurchase(Context context, int id) {
+        SchetovodDatabase database = SchetovodDatabase.getInstance(context);
+        SQLiteDatabase db = database.getWritableDatabase();
+
+        ContentValues newValues = new ContentValues();
+        newValues.put(PurchasesColumns.DELETED, true);
+        db.update(Tables.PURCHASES, newValues, BaseColumns._ID+"="+id, null);
     }
 
     private static CategoryItem cursorToCategory(Cursor cursor) {
@@ -182,6 +192,7 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         final int priceColumn = cursor.getColumnIndex(PurchasesColumns.PRICE);
         final int deletedColumn = cursor.getColumnIndex(PurchasesColumns.DELETED);
         final int descriptionColumn = cursor.getColumnIndex(PurchasesColumns.DESCRIPTION);
+        final int idColumn = cursor.getColumnIndex(BaseColumns._ID);
 
         purchase.setDeleted(cursor.getInt(deletedColumn));
         purchase.setDescription(cursor.getString(descriptionColumn));
@@ -190,6 +201,7 @@ public class SchetovodDatabase extends SQLiteOpenHelper {
         purchase.setCount(cursor.getDouble(countColumn));
         purchase.setDate(cursor.getLong(dateColumn));
         purchase.setPrice(cursor.getDouble(priceColumn));
+        purchase.setId(cursor.getInt(idColumn));
 
         return purchase;
     }

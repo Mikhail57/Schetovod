@@ -3,4 +3,8 @@
     <string name="app_name">Счетовод</string>
     <string name="action_settings">Настройки</string>
     <string name="addButton">Добавить</string>
+
+    <string-array name="menu">
+        <item>Удалить</item>
+    </string-array>
 </resources>

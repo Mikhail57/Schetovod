@@ -20,4 +20,8 @@
         <item>Связь</item>
         <item>Спорт</item>
     </string-array>
+
+    <string-array name="menu">
+        <item>Remove</item>
+    </string-array>
 </resources>

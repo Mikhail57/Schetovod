@@ -13,6 +13,7 @@ import java.util.List;
 
 import me.mustakimov.scetovod.R;
 import me.mustakimov.scetovod.model.PurchaseItem;
+import me.mustakimov.scetovod.provider.SchetovodDatabase;
 
 /**
  * Created by mikhail on 28/05/16.
@@ -65,6 +66,14 @@ public class PurchaseAdapter extends BaseAdapter {
     @Override
     public void notifyDataSetChanged() {
         sort();
+        for (int i = 0; i < purchases.size(); i++) {
+            PurchaseItem purchase = purchases.get(i);
+            if (purchase.isDeleted()) {
+                SchetovodDatabase.deletePurchase(context, purchase.getId());
+                purchases.remove(i);
+                i--;
+            }
+        }
         super.notifyDataSetChanged();
     }
 
@@ -72,6 +81,7 @@ public class PurchaseAdapter extends BaseAdapter {
         Collections.sort(purchases, new PurchasesComparator());
         Collections.reverse(purchases);
     }
+
 
 
     class PurchasesComparator implements Comparator<PurchaseItem> {

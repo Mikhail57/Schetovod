@@ -25,6 +25,8 @@ public class PurchaseItem implements Comparable<PurchaseItem> {
     // Date
     private long date = 0;
 
+    private int id = 0;
+
     @Override
     public int compareTo(@NonNull PurchaseItem another) {
         return this.date < another.date ? -1 :
@@ -89,5 +91,13 @@ public class PurchaseItem implements Comparable<PurchaseItem> {
 
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
